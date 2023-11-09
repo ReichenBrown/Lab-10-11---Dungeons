@@ -11,19 +11,22 @@ class Map:
     if not Map._initialized:
       self._map = []
       self._revealed = []
-      file = open('map.txt', 'r')
-      for line in file.readlines():
-        map_row = []
-        rev_row = []
-        for letter in line:
-          map_row.append(letter)
-          rev_row.append(False)
-        self._map.append(map_row)
-        self._revealed.append(rev_row)
-
+      self.load_map(1)
       Map._initialized = True
       
-
+  def load_map(self, map_num):
+    self._map.clear()
+    self._revealed.clear()
+    file = open(f'map{map_num}.txt', 'r')
+    for line in file.readlines():
+      map_row = []
+      rev_row = []
+      for letter in line:
+        map_row.append(letter)
+        rev_row.append(False)
+      self._map.append(map_row)
+      self._revealed.append(rev_row)
+  
   def __getitem__(self, row):
     return self._map[row]
 
@@ -31,18 +34,18 @@ class Map:
     return len(self._map)
 
   def show_map(self, loc):
-    map = ''
-    for row in range(len(self._map)-1):
-      for col in range(len(self._map[row])-1):
-        if [row, col] == loc:
-          map += '*'
-        elif self._revealed[row][col]:
-          map += self._map[row][col]
-        else:
-          map += 'x'
-      map += '\n'
+    map_str = ""
     
-    return map
+    for r in range(5):
+      for c in range(5):
+        if r == loc[0] and c == loc[1]:
+          map_str += '*'
+        elif self._revealed[r][c]:
+          map_str += self._map[r][c]
+        else:
+             map_str += 'x'
+      map_str += '\n'
+    return map_str
     
   def reveal(self, loc):
     self._revealed[loc[0]][loc[1]] = True

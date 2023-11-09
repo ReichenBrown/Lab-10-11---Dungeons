@@ -1,5 +1,4 @@
 from entity import Entity
-from enemy import Enemy
 from map import Map
 import random
 import check_input
@@ -23,23 +22,23 @@ class Hero(Entity):
   def go_north(self):
       if self.row > 0:
           self.row -= 1
-          return [self.row, self.col]
+          return Map()[self.row][self.col]
       return 'o'
 
   def go_south(self):
-      if self.row < len(Map())-1:
+      if self.row < len(Map()[self.row])-1:
           self.row += 1
-          return [self.row, self.col]
+          return Map()[self.row][self.col]
       return 'o'
 
   def go_east(self):
-      if self.col < len(Map()[0])-1:
+      if self.col < len(Map()[self.col])-1:
           self.col += 1
-          return [self.row, self.col]
+          return Map()[self.row][self.col]
       return 'o'
 
   def go_west(self):
       if self.col > 0:
           self.col -= 1
-          return [self.row, self.col]
+          return Map()[self.row][self.col]
       return 'o'
